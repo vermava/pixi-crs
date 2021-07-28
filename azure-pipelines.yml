@@ -58,3 +58,9 @@ stages:
       - script: if docker exec crs cat /var/log/apache2/error.log | grep ModSecurity | grep MyEvilWAFTest; then echo "WAF Test String Found. This is good!"; else echo "WAF Test String not Found! Aborting!" && exit 1; fi
         displayName: Fail if WAF Test String is missing in ModSecurity logs
 
+- task: SnykSecurityScan@0
+  inputs:
+    serviceConnectionEndpoint: 'Snyk'
+    testType: 'app'
+    monitorOnBuild: true
+    failOnIssues: true
