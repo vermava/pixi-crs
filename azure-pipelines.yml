@@ -42,7 +42,12 @@ stages:
       # Show Full error.log
       - script: docker exec crs cat /var/log/apache2/error.log
         displayName: Show ModSecurity logs
-
+- task: SnykSecurityScan@1
+  inputs:
+    serviceConnectionEndpoint: 'Snyk'
+    testType: 'app'
+    monitorWhen: 'always'
+    failOnIssues: true
       # ModSecurity Log Analysis:
       # Fail if ModSecurity log is not empty
       # Show ModSecurity logs of Testcafe Tests
